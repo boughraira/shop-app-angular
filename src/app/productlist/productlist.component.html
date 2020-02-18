@@ -1,0 +1,29 @@
+<app-appnav></app-appnav>
+
+<div class="album py-5 bg-light">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-4" *ngFor="let item of products">
+            <div class="card mb-4 shadow-sm">
+              <img
+                class="card-img-top"
+                alt="Thumbnail [100%x225]"
+                style=" width: 100%; display: block;"
+                [src]="item.image"
+                data-holder-rendered="true"
+              />
+              <div class="card-body">
+                <h4 class="card-text">{{item.name}}</h4>
+                <p class="card-text">{{item.description | truncate: [140, '...']}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 class="card-text">{{item.price | currency}}</h2>
+                    <button type="button" class="btn" (click)="addItemToCart(item)" [class.btn-outline-primary]="itemInCart(item).length">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
