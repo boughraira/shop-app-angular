@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { ProductsService } from '../services/products.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from "rxjs";
 @Component({
   selector: 'app-addproduct',
   templateUrl: './addproduct.component.html',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AddproductComponent implements OnInit {
   product=[];
+  productSub;
   productForm = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
@@ -18,9 +20,14 @@ export class AddproductComponent implements OnInit {
    
   });
 
-  constructor(private router: Router, private fb: FormBuilder, private productsService: ProductsService) { }
+  constructor(private router: Router, private fb: FormBuilder, private productsService: ProductsService) { 
+    this.productSub = new BehaviorSubject<any[]>(this.product);
+  }
 
   ngOnInit() {
+  }
+  clearForm() {
+    this.productSub.next([]);
   }
   doAdd() {
     const product = {
@@ -33,7 +40,7 @@ export class AddproductComponent implements OnInit {
       snackbar.className = 'show';
       setTimeout(() => {
         snackbar.className = snackbar.className.replace('show', '');
-        this.productsService.clearForm();
+        this.clearForm();
         this.router.navigate(['/products']);
       }, 3000);
     });
