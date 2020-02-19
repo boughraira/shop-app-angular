@@ -1,0 +1,40 @@
+<app-appnav></app-appnav>
+<div class="container">
+  <div class="py-5 text-center">
+    <h2> Add Product </h2>
+  </div>
+  
+  <div class="">
+    <form class="needs-validation" [formGroup]="productForm"  (ngSubmit)="doAdd()" >
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label >Name</label>
+          <input type="text" class="form-control"   placeholder="" value="" required="" formControlName="name">
+          <div class="invalid-feedback"> Name is required.</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label >Description</label>
+          <input type="text" class="form-control"  placeholder="" value="" required="" formControlName="description">
+          <div class="invalid-feedback">Description is required.</div>
+        </div>
+      </div>
+
+      <div class="row">
+         <div class="col-md-6 mb-3">
+        <label >Price</label>
+        <input type="number"  class="form-control"  placeholder="" formControlName="price">
+        <div class="invalid-feedback">Price is required</div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label >Image URL </label>
+        <input type="text"  class="form-control"  placeholder="" formControlName="image">
+        <div class="invalid-feedback">Image is required</div>
+      </div>
+      </div>
+     
+      <button class="btn btn-primary btn-lg btn-block"  type="submit" [disabled]="!productForm.valid">Add Product</button>
+
+      </form>
+      <div id="snackbar"></div>
+      </div>
+</div>

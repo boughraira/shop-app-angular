@@ -13,6 +13,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { TruncatePipe } from './truncate.pipe';
 import { OrderComponent } from './order/order.component';
+import { AddproductComponent } from './addproduct/addproduct.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { OrderComponent } from './order/order.component';
     CheckoutComponent,
     PagenotfoundComponent,
     TruncatePipe,
-    OrderComponent
+    OrderComponent,
+    AddproductComponent
   ],
   imports: [
     BrowserModule,

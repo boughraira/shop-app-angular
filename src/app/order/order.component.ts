@@ -12,7 +12,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     this.httpClient
-      .get<any>("/api/orders", {
+      .get<any>("http://localhost:3000/api/orders", {
         headers: { "Content-Type": "application/json" }
       })
       .subscribe(data => (this.orders = [...data]));
