@@ -14,6 +14,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { TruncatePipe } from './truncate.pipe';
 import { OrderComponent } from './order/order.component';
 import { AddproductComponent } from './addproduct/addproduct.component';
+import { MessageService } from "./services/message.service";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { AddproductComponent } from './addproduct/addproduct.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

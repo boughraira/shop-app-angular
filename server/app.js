@@ -7,6 +7,7 @@ const config = require("./config");
 
 const Product = require("./models/product");
 const Order = require("./models/order");
+const nodemailer = require('nodemailer');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoURL, { useNewUrlParser: true });
@@ -20,6 +21,41 @@ app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
+
+const sendMail = (user, callback) => {
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: "boughrairahazem8@gmail.com",
+      pass: "hazouma123"
+    }
+  }); 
+  const mailOptions = {
+    from: `"hazem boughraira", "boughrairahazem8@gmail.com"`,
+    to: `<${user.email}>`,
+    subject: "Confirmation",
+    html: "<h1>Your order has been confirmed</h1>"
+  };
+transporter.sendMail(mailOptions, callback);
+}
+app.post("/api/sendmail", (req, res) => {
+  console.log("request came");
+  let userMail =req.body ;
+  sendMail(userMail, (err, info) => {
+    if (err) {
+      console.log(err);
+      res.status(400).json({ error: "Failed to send email" });
+     
+    } else {
+      console.log("Email has been sent");
+      
+    }
+  });
+});
+
+
 app.post("/api/product", (req, res) => {
   const newProduct = new Product({
     name: req.body.name,
@@ -46,6 +82,25 @@ app.get("/api/products", (req, res) => {
     }
   });
 });
+app.put("/api/product/:id", (req, res) => {
+  Product.findOneAndUpdate({ _id: req.params.id }, req.body).then(rec => {
+    if (rec) {
+      res.status(200).json(rec);
+    } else {
+      res.status(500).json({ error: "error" });
+    }
+  });
+});
+app.delete("/api/product/:id", (req, res) => {
+  Product.findOneAndDelete({ _id: req.params.id },).then(rec => {
+    if (rec) {
+      res.status(200).json(rec);
+    } else {
+      res.status(500).json({ error: "error" });
+    }
+  });
+});
+
 app.post("/api/checkout", (req, res) => {
   const newOrder = new Order({
     firstName: req.body.firstName,

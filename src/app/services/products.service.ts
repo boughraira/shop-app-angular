@@ -42,8 +42,12 @@ export class ProductsService {
         this.removeFromCart(id);
       } else {
         this._cart.push(product[0]);
+        
+       
+        
       }
       this.cartSub.next([...this._cart]);
+     
     }
   }
   removeFromCart(id) {
