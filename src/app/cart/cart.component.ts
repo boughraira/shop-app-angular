@@ -19,5 +19,9 @@ export class CartComponent implements OnInit {
   }
   removeItemFromCart(item) {
     this.productsService.removeFromCart(item.id);
+  
+    console.log('removed succesfuly');
   }
+
+  
 }
