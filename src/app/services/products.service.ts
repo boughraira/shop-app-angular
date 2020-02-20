@@ -57,9 +57,7 @@ export class ProductsService {
   clearCart() {
     this.cartSub.next([]);
   }
-  clearForm() {
-    this.productsSub.next([]);
-  }
+  
   findItemInCart(id) {
     const item = this._cart.filter(product => product._id === id);
     return item;
