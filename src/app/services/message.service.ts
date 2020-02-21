@@ -8,6 +8,8 @@ export class MessageService {
 
   constructor(private http: HttpClient) { }
   sendMessage(body) {
-    return this.http.post("http://localhost:3000/api/sendmail", body);
+    return this.http.post("http://localhost:3000/api/sendmail",body,{
+      headers: { "Content-Type": "application/json" }
+    });
   }
 }

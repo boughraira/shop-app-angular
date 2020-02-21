@@ -7,12 +7,13 @@ const config = require("./config");
 
 const Product = require("./models/product");
 const Order = require("./models/order");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoURL, { useNewUrlParser: true });
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(express.static(path.join(__dirname, "../dist")));
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -29,32 +30,35 @@ const sendMail = (user, callback) => {
     secure: false,
     auth: {
       user: "boughrairahazem8@gmail.com",
-      pass: "hazouma123"
+      pass: "hyiguroafrulgyzn"
     }
-  }); 
+  });
   const mailOptions = {
     from: `"hazem boughraira", "boughrairahazem8@gmail.com"`,
-    to: `<${user.email}>`,
+    to: user.email,
     subject: "Confirmation",
-    html: "<h1>Your order has been confirmed</h1>"
+    html: `<h1>Your order has been confirmed</h1><br>`
   };
-transporter.sendMail(mailOptions, callback);
-}
+  transporter.sendMail(mailOptions, callback);
+};
 app.post("/api/sendmail", (req, res) => {
   console.log("request came");
-  let userMail =req.body ;
-  sendMail(userMail, (err, info) => {
+  Order.findOne({},function(err,order){
+  let userMail = "boughrairahazem8@gmail.com";
+  
+  sendMail(order, (err, info) => {
     if (err) {
       console.log(err);
       res.status(400).json({ error: "Failed to send email" });
-     
     } else {
       console.log("Email has been sent");
-      
+      res.status(200).json({ message: info });
     }
+  })
+ 
+
   });
 });
-
 
 app.post("/api/product", (req, res) => {
   const newProduct = new Product({
@@ -92,7 +96,7 @@ app.put("/api/product/:id", (req, res) => {
   });
 });
 app.delete("/api/product/:id", (req, res) => {
-  Product.findOneAndDelete({ _id: req.params.id },).then(rec => {
+  Product.findOneAndDelete({ _id: req.params.id }).then(rec => {
     if (rec) {
       res.status(200).json(rec);
     } else {

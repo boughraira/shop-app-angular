@@ -40,6 +40,7 @@
           <h5 class="card-title">Informations</h5>
           <p class="card-text">
             Name: {{ order.firstName }} {{ order.lastName }}<br />
+            Email: {{ order.email }} <br />
             Address: {{ order.addressOne }}<br />
             Address 2: {{ order.addressTwo }} <br />
             {{ order.country }}, {{ order.state }}, {{ order.zip }}<br />
@@ -56,10 +57,12 @@
       </div>
     </div>
     <div class="card-footer text-muted text-right">
-      <b>
-        <button class="btn btn-primary ">Confirm</button
-        ><b>Total: {{ orderTotal(order.items) | currency }}</b>
+      <b> Total: {{ orderTotal(order.items) | currency }}<br>
+        <button class="btn btn-sm btn-outline-primary mr-2" (click)="message(order.email)">Confirm Order</button
+        >
+     
       </b>
     </div>
   </div>
+  <div id="snackbar"></div>
 </div>

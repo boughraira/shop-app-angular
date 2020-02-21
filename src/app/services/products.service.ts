@@ -17,17 +17,26 @@ export class ProductsService {
   }
 
   fetchProducts() {
-    this.http.get<any[]>('http://localhost:3000/api/products', {
-      headers: { "Content-Type": "application/json" }
-    }).subscribe(data => {
-      this._products = [...data];
-      this.productsSub.next([...this._products]);
-    });
+    this.http
+      .get<any[]>("http://localhost:3000/api/products", {
+        headers: { "Content-Type": "application/json" }
+      })
+      .subscribe(data => {
+        this._products = [...data];
+        this.productsSub.next([...this._products]);
+      });
   }
   addProduct(data) {
     return this.http.post("http://localhost:3000/api/product", data, {
       headers: { "Content-Type": "application/json" }
     });
+  }
+  deleteProduct(id) {
+    return this
+              .http
+              .delete(`http://localhost:3000/api/product/${id}`,{
+                headers: { "Content-Type": "application/json" }
+              });
   }
   getProducts() {
     return this.productsSub.asObservable();
@@ -42,12 +51,9 @@ export class ProductsService {
         this.removeFromCart(id);
       } else {
         this._cart.push(product[0]);
-        
-       
-        
+      
       }
       this.cartSub.next([...this._cart]);
-     
     }
   }
   removeFromCart(id) {
@@ -61,7 +67,7 @@ export class ProductsService {
   clearCart() {
     this.cartSub.next([]);
   }
-  
+
   findItemInCart(id) {
     const item = this._cart.filter(product => product._id === id);
     return item;
