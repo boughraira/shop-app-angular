@@ -38,7 +38,7 @@ const sendMail = (user, callback) => {
     to: user.email,
     subject: "Confirmation",
     html: `<h1>Your order has been confirmed</h1><br>
-            <h3>Order N°: ${user.id}`
+            <h3>Order N°: ${user.id}</h3>`
   };
   transporter.sendMail(mailOptions, callback);
 };
