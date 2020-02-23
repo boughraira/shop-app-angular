@@ -90,25 +90,25 @@ app.get("/api/products", (req, res) => {
 app.put("/api/product/:id", (req, res) => {
   Product.findOneAndUpdate({ _id: req.params.id }, req.body).then(rec => {
     if (rec) {
-      res.status(200).json(rec);
+      res.status(200).json({message:"product updated successfuly"});
     } else {
       res.status(500).json({ error: "error" });
     }
   });
 });
 app.get("/api/product/:id", (req, res) => {
-  Product.findById( id).then(rec => {
-    if (rec) {
-      res.status(200).json(rec);
+  Product.findOne( {_id:req.params.id },(err,rec)=>{
+    if(err){
+      res.status(500).json({ error: err });
     } else {
-      res.status(500).json({ error: "error" });
+      res.status(200).json(rec);
     }
-  });
+  })
 });
 app.delete("/api/product/:id", (req, res) => {
   Product.findOneAndDelete({ _id: req.params.id }).then(rec => {
     if (rec) {
-      res.status(200).json(rec);
+      res.status(200).json({message:"product deleted sucessfuly"});
     } else {
       res.status(500).json({ error: "error" });
     }
