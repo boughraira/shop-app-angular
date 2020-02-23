@@ -37,7 +37,8 @@ const sendMail = (user, callback) => {
     from: `"hazem boughraira", "boughrairahazem8@gmail.com"`,
     to: user.email,
     subject: "Confirmation",
-    html: `<h1>Your order has been confirmed</h1><br>`
+    html: `<h1>Your order has been confirmed</h1><br>
+            <h3>Order N°: ${user.id}`
   };
   transporter.sendMail(mailOptions, callback);
 };
@@ -95,6 +96,15 @@ app.put("/api/product/:id", (req, res) => {
     }
   });
 });
+app.get("/api/product/:id", (req, res) => {
+  Product.findById( id).then(rec => {
+    if (rec) {
+      res.status(200).json(rec);
+    } else {
+      res.status(500).json({ error: "error" });
+    }
+  });
+});
 app.delete("/api/product/:id", (req, res) => {
   Product.findOneAndDelete({ _id: req.params.id }).then(rec => {
     if (rec) {
@@ -136,6 +146,15 @@ app.get("/api/orders", (req, res) => {
     .catch(err => {
       res.status(500).json(err);
     });
+});
+app.delete("/api/order/:id", (req, res) => {
+  Order.findOneAndDelete({ _id: req.params.id }).then(rec => {
+    if (rec) {
+      res.status(200).json(rec);
+    } else {
+      res.status(500).json({ error: "error" });
+    }
+  });
 });
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
