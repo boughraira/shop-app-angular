@@ -44,7 +44,7 @@ export class CheckoutComponent implements OnInit {
       setTimeout(() => {
         snackbar.className = snackbar.className.replace('show', '');
         this.productsService.clearCart();
-        this.router.navigate(['/products']);
+        this.router.navigate(['/orders']);
       }, 3000);
     });
   }

@@ -23,4 +23,16 @@ export class ProductlistComponent implements OnInit {
   itemInCart(item) {
     return this.productsService.findItemInCart(item._id);
   }
+  delete(id){
+    this.productsService.deleteProduct(id).subscribe(res=>{
+      this.products.splice(id, 1);
+      const snackbar = document.getElementById('snackbar');
+      snackbar.innerHTML = 'Order deleted successfully';
+      snackbar.className = 'show';
+     
+      setTimeout(() => {
+        snackbar.className = snackbar.className.replace('show', '');
+      }, 3000);
+    });
+  }
 }

@@ -12,8 +12,8 @@ const nodemailer = require("nodemailer");
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoURL, { useNewUrlParser: true });
 
-app.use(bodyParser.json({limit: '10mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+app.use(bodyParser.json({ limit: "10mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(express.static(path.join(__dirname, "../dist")));
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-const sendMail = (user, callback) => {
+const sendMail = (order, callback) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -35,29 +35,30 @@ const sendMail = (user, callback) => {
   });
   const mailOptions = {
     from: `"hazem boughraira", "boughrairahazem8@gmail.com"`,
-    to: user.email,
+    to: `${order.email}`,
     subject: "Confirmation",
     html: `<h1>Your order has been confirmed</h1><br>
-            <h3>Order N°: ${user.id}</h3>`
+            <h3>Order N°: ${order._id}</h3><br>
+            <h3>Your products will be delivered to ${order.firstName} ${order.lastName} <br> Adresse:${order.addressOne} ${order.country} ${order.state} ${order.zip} </h3>
+            `
   };
   transporter.sendMail(mailOptions, callback);
 };
-app.post("/api/sendmail", (req, res) => {
+app.post("/api/sendmail/:id", (req, res) => {
   console.log("request came");
-  Order.findOne({},function(err,order){
-  let userMail = "boughrairahazem8@gmail.com";
   
-  sendMail(order, (err, info) => {
-    if (err) {
-      console.log(err);
-      res.status(400).json({ error: "Failed to send email" });
-    } else {
-      console.log("Email has been sent");
-      res.status(200).json({ message: info });
-    }
-  })
- 
+  Order.findById({_id: req.params.id}, function(err, order) {
+    
 
+    sendMail(order, (err, info) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json({ error: "Failed to send email" });
+      } else {
+        console.log("Email has been sent");
+        res.status(200).json({ message: info });
+      }
+    });
   });
 });
 
@@ -90,25 +91,25 @@ app.get("/api/products", (req, res) => {
 app.put("/api/product/:id", (req, res) => {
   Product.findOneAndUpdate({ _id: req.params.id }, req.body).then(rec => {
     if (rec) {
-      res.status(200).json({message:"product updated successfuly"});
+      res.status(200).json({ message: "product updated successfuly" });
     } else {
       res.status(500).json({ error: "error" });
     }
   });
 });
 app.get("/api/product/:id", (req, res) => {
-  Product.findOne( {_id:req.params.id },(err,rec)=>{
-    if(err){
+  Product.findOne({ _id: req.params.id }, (err, rec) => {
+    if (err) {
       res.status(500).json({ error: err });
     } else {
       res.status(200).json(rec);
     }
-  })
+  });
 });
 app.delete("/api/product/:id", (req, res) => {
   Product.findOneAndDelete({ _id: req.params.id }).then(rec => {
     if (rec) {
-      res.status(200).json({message:"product deleted sucessfuly"});
+      res.status(200).json({ message: "product deleted sucessfuly" });
     } else {
       res.status(500).json({ error: "error" });
     }

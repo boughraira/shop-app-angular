@@ -19,7 +19,8 @@ export class CartComponent implements OnInit {
   }
   removeItemFromCart(item) {
     this.productsService.removeFromCart(item.id);
-  
+    this.cart.splice(item.id, 1);
+    this.cartTotal = this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
     console.log('removed succesfuly');
   }
 

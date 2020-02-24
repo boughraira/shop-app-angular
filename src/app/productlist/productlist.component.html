@@ -5,13 +5,14 @@
       <div class="row">
           <div class="col-md-4" *ngFor="let item of products">
             <div class="card mb-4 shadow-sm">
-              <img
+              <button class="btn" (click)="delete(item._id)" style="float: right;"  ><i class="far fa-times-circle"></i></button>
+             <a [routerLink]="['/editProduct/',item._id]" ><img
                 class="card-img-top"
                 alt="Thumbnail [100%x225]"
                 style=" width: 100%; display: block;"
                 [src]="item.image"
                 data-holder-rendered="true"
-              />
+              /></a> 
               <div class="card-body">
                 <h4 class="card-text">{{item.name}}</h4>
                 <p class="card-text">{{item.description | truncate: [140, '...']}}</p>
@@ -25,5 +26,7 @@
             </div>
           </div>
         </div>
+        <div id="snackbar"></div>
+
   </div>
 </div>

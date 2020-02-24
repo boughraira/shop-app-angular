@@ -47,6 +47,7 @@
           </p>
         </div>
         <div class="col">
+          <button class="btn" (click)="delete(order._id)" style="float: right;"  ><i class="far fa-times-circle"></i></button>
           <h5 class="card-title">Order Items</h5>
           <ul class="list-group">
             <li class="list-group-item" *ngFor="let item of order.items">
@@ -58,7 +59,7 @@
     </div>
     <div class="card-footer text-muted text-right">
       <b> Total: {{ orderTotal(order.items) | currency }}<br>
-        <button class="btn btn-sm btn-outline-primary mr-2" (click)="message(order.email)">Confirm Order</button
+        <button class="btn btn-sm btn-outline-primary mr-2" (click)="message(order._id)">Confirm Order</button
         >
      
       </b>

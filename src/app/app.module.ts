@@ -15,6 +15,7 @@ import { TruncatePipe } from './truncate.pipe';
 import { OrderComponent } from './order/order.component';
 import { AddproductComponent } from './addproduct/addproduct.component';
 import { MessageService } from "./services/message.service";
+import { EditproductComponent } from './editproduct/editproduct.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MessageService } from "./services/message.service";
     PagenotfoundComponent,
     TruncatePipe,
     OrderComponent,
-    AddproductComponent
+    AddproductComponent,
+    EditproductComponent
   ],
   imports: [
     BrowserModule,

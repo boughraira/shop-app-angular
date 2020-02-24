@@ -41,6 +41,27 @@ export class ProductsService {
   getProducts() {
     return this.productsSub.asObservable();
   }
+  editProduct(id){
+    return this
+              .http
+              .get(`http://localhost:3000/api/product/${id}`,{
+                headers: { "Content-Type": "application/json" }
+              });
+  }
+  updateProduct(id){
+    return this
+    .http
+    .put(`http://localhost:3000/api/product/${id}`,{
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+  deleteOrder(id) {
+    return this
+              .http
+              .delete(`http://localhost:3000/api/order/${id}`,{
+                headers: { "Content-Type": "application/json" }
+              });
+  }
   getCart() {
     return this.cartSub.asObservable();
   }
