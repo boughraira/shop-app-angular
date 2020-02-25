@@ -31,6 +31,11 @@ export class ProductsService {
       headers: { "Content-Type": "application/json" }
     });
   }
+  addRate(data) {
+    return this.http.post("http://localhost:3000/api/rate", data, {
+      headers: { "Content-Type": "application/json" }
+    });
+  }
   deleteProduct(id) {
     return this
               .http
@@ -72,7 +77,7 @@ export class ProductsService {
         this.removeFromCart(id);
       } else {
         this._cart.push(product[0]);
-      
+        localStorage.setItem(JSON.stringify(product),'product');
       }
       this.cartSub.next([...this._cart]);
     }

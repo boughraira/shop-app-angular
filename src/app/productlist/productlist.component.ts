@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../services/products.service';
+import { StarRatingComponent } from 'ng-starrating';
 
 @Component({
   selector: 'app-productlist',
@@ -35,4 +36,20 @@ export class ProductlistComponent implements OnInit {
       }, 3000);
     });
   }
+  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}) {
+      console.log(`Old Value:${$event.oldValue}, 
+      New Value: ${$event.newValue}, 
+      Checked Color: ${$event.starRating.checkedcolor}, 
+      Unchecked Color: ${$event.starRating.uncheckedcolor}`);
+      this.productsService.addRate($event.newValue).subscribe(res=>{
+        const snackbar = document.getElementById('snackbar');
+        snackbar.innerHTML = 'Thank you for rating this product';
+        snackbar.className = 'show';
+       
+        setTimeout(() => {
+          snackbar.className = snackbar.className.replace('show', '');
+        }, 3000);
+      })
+  }
+
 }

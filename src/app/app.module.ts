@@ -16,6 +16,7 @@ import { OrderComponent } from './order/order.component';
 import { AddproductComponent } from './addproduct/addproduct.component';
 import { MessageService } from "./services/message.service";
 import { EditproductComponent } from './editproduct/editproduct.component';
+import { RatingModule } from 'ng-starrating';
 
 @NgModule({
   declarations: [
@@ -28,15 +29,19 @@ import { EditproductComponent } from './editproduct/editproduct.component';
     TruncatePipe,
     OrderComponent,
     AddproductComponent,
-    EditproductComponent
+    EditproductComponent,
+      
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RatingModule
+   
   ],
   providers: [MessageService],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

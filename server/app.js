@@ -7,6 +7,8 @@ const config = require("./config");
 
 const Product = require("./models/product");
 const Order = require("./models/order");
+const Rate = require("./models/rate");
+
 const nodemailer = require("nodemailer");
 
 mongoose.Promise = global.Promise;
@@ -67,7 +69,8 @@ app.post("/api/product", (req, res) => {
     name: req.body.name,
     image: req.body.image,
     price: req.body.price,
-    description: req.body.description
+    description: req.body.description,
+    rate:req.body.rate
   });
   newProduct.save().then(
     rec => {
@@ -75,6 +78,21 @@ app.post("/api/product", (req, res) => {
     },
     err => {
       res.status(500).json({ error: "error" });
+    }
+  );
+});
+app.post("/api/rate",(req,res)=>{
+  const newRate=new Rate({
+    rate:req.body.rate,
+    product:req.body.product.map(item=>item._id) || []
+   
+  });
+  newRate.save().then(
+    rec => {
+      res.status(200).json(rec);
+    },
+    err => {
+      res.status(500).json({ error: err });
     }
   );
 });

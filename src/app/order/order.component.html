@@ -3,6 +3,7 @@
   <br /><br />
   <div class="row">
     <div class="col">
+      <h3 style="text-align:center">Orders</h3>
       <div class="card text-white bg-secondary mb-3">
         <div class="card-body">
           <p class="card-text d-flex justify-content-around">
@@ -13,6 +14,7 @@
       </div>
     </div>
     <div class="col">
+      <h3 style="text-align:center">Total Earnings</h3>
       <div class="card text-white bg-success mb-3">
         <div class="card-body">
           <p class="card-text d-flex justify-content-around">
@@ -23,6 +25,7 @@
       </div>
     </div>
     <div class="col">
+      <h3 style="text-align:center">Total Items</h3>
       <div class="card text-white bg-info mb-3">
         <div class="card-body">
           <p class="card-text d-flex justify-content-around">
@@ -58,8 +61,8 @@
       </div>
     </div>
     <div class="card-footer text-muted text-right">
-      <b> Total: {{ orderTotal(order.items) | currency }}<br>
-        <button class="btn btn-sm btn-outline-primary mr-2" (click)="message(order._id)">Confirm Order</button
+      <b> Total: {{ orderTotal(order.items) | currency }}
+        <button class="btn btn-sm btn-outline-primary mr-2" (click)="message(order._id)" style="float: left;">Confirm Order</button
         >
      
       </b>
