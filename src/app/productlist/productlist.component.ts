@@ -27,7 +27,7 @@ export class ProductlistComponent implements OnInit {
     this.productsService.deleteProduct(id).subscribe(res=>{
       this.products.splice(id, 1);
       const snackbar = document.getElementById('snackbar');
-      snackbar.innerHTML = 'Order deleted successfully';
+      snackbar.innerHTML = 'Product deleted successfully';
       snackbar.className = 'show';
      
       setTimeout(() => {

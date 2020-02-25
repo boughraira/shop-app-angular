@@ -4,8 +4,8 @@
     <h2> Edit Product </h2>
   </div>
   
-  <div class="">
-    <form class="needs-validation" [formGroup]="productForm"  (ngSubmit)="doAdd()" >
+  <div class="" >
+    <form class="needs-validation" [formGroup]="productForm"  (ngSubmit)="updateProduct(product._id)" >
       <div class="row">
         <div class="col-md-6 mb-3">
           <label >Name</label>

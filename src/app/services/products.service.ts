@@ -48,10 +48,10 @@ export class ProductsService {
                 headers: { "Content-Type": "application/json" }
               });
   }
-  updateProduct(id){
+  updateProduct(id,data){
     return this
     .http
-    .put(`http://localhost:3000/api/product/${id}`,{
+    .put(`http://localhost:3000/api/product/${id}`,data,{
       headers: { "Content-Type": "application/json" }
     });
   }

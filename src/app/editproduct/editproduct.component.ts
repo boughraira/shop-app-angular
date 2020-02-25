@@ -29,6 +29,22 @@ export class EditproductComponent implements OnInit {
     });
   });
   }
+  updateProduct(id){
+    const product = {
+      ...this.productForm.value,
+      items: this.product
+    };
+    this.productsService.updateProduct(id,product).subscribe(res=>{
+      const snackbar = document.getElementById('snackbar');
+      snackbar.innerHTML = 'Product updated successfully';
+      snackbar.className = 'show';
+      setTimeout(() => {
+        snackbar.className = snackbar.className.replace('show', '');
+       
+        this.router.navigate(['/products']);
+      }, 3000);
+    });
+  }
   
 
 }
