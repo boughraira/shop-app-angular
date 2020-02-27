@@ -7,8 +7,7 @@ const config = require("./config");
 
 const Product = require("./models/product");
 const Order = require("./models/order");
-const Rate = require("./models/rate");
-
+const Cart = require("./models/cart");
 const nodemailer = require("nodemailer");
 
 mongoose.Promise = global.Promise;
@@ -48,10 +47,8 @@ const sendMail = (order, callback) => {
 };
 app.post("/api/sendmail/:id", (req, res) => {
   console.log("request came");
-  
-  Order.findById({_id: req.params.id}, function(err, order) {
-    
 
+  Order.findById({ _id: req.params.id }, function(err, order) {
     sendMail(order, (err, info) => {
       if (err) {
         console.log(err);
@@ -70,7 +67,7 @@ app.post("/api/product", (req, res) => {
     image: req.body.image,
     price: req.body.price,
     description: req.body.description,
-    rate:req.body.rate
+    rate: req.body.rate
   });
   newProduct.save().then(
     rec => {
@@ -78,21 +75,6 @@ app.post("/api/product", (req, res) => {
     },
     err => {
       res.status(500).json({ error: "error" });
-    }
-  );
-});
-app.post("/api/rate",(req,res)=>{
-  const newRate=new Rate({
-    rate:req.body.rate,
-    product:req.body.product.map(item=>item._id) || []
-   
-  });
-  newRate.save().then(
-    rec => {
-      res.status(200).json(rec);
-    },
-    err => {
-      res.status(500).json({ error: err });
     }
   );
 });
@@ -132,6 +114,39 @@ app.delete("/api/product/:id", (req, res) => {
       res.status(500).json({ error: "error" });
     }
   });
+});
+app.post("/api/cart", (req, res) => {
+  const newCart = new Cart({
+    products: req.body.products.map(product => product._id) || []
+  });
+  newCart.save().then(
+    rec => {
+      res.status(200).json(rec);
+    },
+    err => {
+      res.status(500).json({ error: "error" });
+    }
+  );
+});
+app.delete("/api/cart/:id", (req, res) => {
+  Cart.findOneAndDelete({ _id: req.params.id }).then(rec => {
+    if (rec) {
+      res.status(200).json({ message: "product deleted from cart sucessfuly" });
+    } else {
+      res.status(500).json({ error: "error" });
+    }
+  });
+});
+app.get("/api/cart", (req, res) => {
+  Cart.find()
+    .populate("products")
+    .exec()
+    .then(rec => {
+      res.status(200).json(rec);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
 app.post("/api/checkout", (req, res) => {

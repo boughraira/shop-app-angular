@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+
 import { ProductsService } from '../services/products.service';
 
 @Component({
@@ -9,17 +11,20 @@ import { ProductsService } from '../services/products.service';
 export class CartComponent implements OnInit {
   cart = [];
   cartTotal = 0;
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService ,private httpClient: HttpClient) { }
 
   ngOnInit() {
-    this.productsService.getCart().subscribe(data => {
+    this.httpClient
+      .get<any>("http://localhost:3000/api/cart", {
+        headers: { "Content-Type": "application/json" }
+      }).subscribe(data => {
       this.cart = [...data];
       this.cartTotal = this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
     });
   }
-  removeItemFromCart(item) {
-    this.productsService.removeFromCart(item.id);
-    this.cart.splice(item.id, 1);
+  removeItemFromCart(id) {
+    this.productsService.removeFromCart(id);
+   this.cart.splice(id,1);
     this.cartTotal = this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
     console.log('removed succesfuly');
   }

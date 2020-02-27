@@ -31,65 +31,51 @@ export class ProductsService {
       headers: { "Content-Type": "application/json" }
     });
   }
-  addRate(data) {
-    return this.http.post("http://localhost:3000/api/rate", data, {
+
+  deleteProduct(id) {
+    return this.http.delete(`http://localhost:3000/api/product/${id}`, {
       headers: { "Content-Type": "application/json" }
     });
-  }
-  deleteProduct(id) {
-    return this
-              .http
-              .delete(`http://localhost:3000/api/product/${id}`,{
-                headers: { "Content-Type": "application/json" }
-              });
   }
   getProducts() {
     return this.productsSub.asObservable();
   }
-  editProduct(id){
-    return this
-              .http
-              .get(`http://localhost:3000/api/product/${id}`,{
-                headers: { "Content-Type": "application/json" }
-              });
+  editProduct(id) {
+    return this.http.get(`http://localhost:3000/api/product/${id}`, {
+      headers: { "Content-Type": "application/json" }
+    });
   }
-  updateProduct(id,data){
-    return this
-    .http
-    .put(`http://localhost:3000/api/product/${id}`,data,{
+  updateProduct(id, data) {
+    return this.http.put(`http://localhost:3000/api/product/${id}`, data, {
       headers: { "Content-Type": "application/json" }
     });
   }
   deleteOrder(id) {
-    return this
-              .http
-              .delete(`http://localhost:3000/api/order/${id}`,{
-                headers: { "Content-Type": "application/json" }
-              });
+    return this.http.delete(`http://localhost:3000/api/order/${id}`, {
+      headers: { "Content-Type": "application/json" }
+    });
   }
   getCart() {
     return this.cartSub.asObservable();
   }
-  addToCart(id) {
-    const product = this.findItemInProducts(id);
-    if (product.length !== 0) {
-      if (this.findItemInCart(id).length) {
-        this.removeFromCart(id);
-      } else {
-        this._cart.push(product[0]);
-        localStorage.setItem(JSON.stringify(product),'product');
-      }
-      this.cartSub.next([...this._cart]);
+  addToCart(data) {
+   
+        
+        return this.http.post("http://localhost:3000/api/cart", data, {
+          headers: { "Content-Type": "application/json" }
+        });
+       
     }
-  }
+  
   removeFromCart(id) {
-    if (this.findItemInCart(id).length) {
-      const item = this.findItemInCart(id)[0];
-      const index = this._cart.indexOf(item);
-      this._cart.splice(index, 1);
+  
+      this.http.delete(`http://localhost:3000/api/cart/${id}`, {
+        headers: { "Content-Type": "application/json" }
+      });
+   
     }
-    this.cartSub.next([...this._cart]);
-  }
+   
+  
   clearCart() {
     this.cartSub.next([]);
   }
