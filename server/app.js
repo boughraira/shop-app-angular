@@ -7,7 +7,6 @@ const config = require("./config");
 
 const Product = require("./models/product");
 const Order = require("./models/order");
-const Cart = require("./models/cart");
 const nodemailer = require("nodemailer");
 
 mongoose.Promise = global.Promise;
@@ -31,9 +30,11 @@ const sendMail = (order, callback) => {
     secure: false,
     auth: {
       user: "boughrairahazem8@gmail.com",
-      pass: "hyiguroafrulgyzn"
+      pass: "ufqlyxjkfyplpajz"
     }
   });
+ 
+ 
   const mailOptions = {
     from: `"hazem boughraira", "boughrairahazem8@gmail.com"`,
     to: `${order.email}`,
@@ -50,12 +51,14 @@ app.post("/api/sendmail/:id", (req, res) => {
 
   Order.findById({ _id: req.params.id }, function(err, order) {
     sendMail(order, (err, info) => {
+      
       if (err) {
         console.log(err);
         res.status(400).json({ error: "Failed to send email" });
       } else {
         console.log("Email has been sent");
         res.status(200).json({ message: info });
+       
       }
     });
   });
@@ -115,39 +118,7 @@ app.delete("/api/product/:id", (req, res) => {
     }
   });
 });
-app.post("/api/cart", (req, res) => {
-  const newCart = new Cart({
-    products: req.body.products.map(product => product._id) || []
-  });
-  newCart.save().then(
-    rec => {
-      res.status(200).json(rec);
-    },
-    err => {
-      res.status(500).json({ error: "error" });
-    }
-  );
-});
-app.delete("/api/cart/:id", (req, res) => {
-  Cart.findOneAndDelete({ _id: req.params.id }).then(rec => {
-    if (rec) {
-      res.status(200).json({ message: "product deleted from cart sucessfuly" });
-    } else {
-      res.status(500).json({ error: "error" });
-    }
-  });
-});
-app.get("/api/cart", (req, res) => {
-  Cart.find()
-    .populate("products")
-    .exec()
-    .then(rec => {
-      res.status(200).json(rec);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
-});
+
 
 app.post("/api/checkout", (req, res) => {
   const newOrder = new Order({
@@ -175,7 +146,14 @@ app.get("/api/orders", (req, res) => {
     .populate("items")
     .exec()
     .then(rec => {
-      res.status(200).json(rec);
+    //  console.log(rec);
+     rec.forEach(x=>{
+       console.log(x);
+     })
+
+     res.status(200).json(rec);
+
+    
     })
     .catch(err => {
       res.status(500).json(err);

@@ -58,22 +58,27 @@ export class ProductsService {
   getCart() {
     return this.cartSub.asObservable();
   }
-  addToCart(data) {
-   
-        
-        return this.http.post("http://localhost:3000/api/cart", data, {
-          headers: { "Content-Type": "application/json" }
-        });
-       
+  addToCart(id) {
+    const product = this.findItemInProducts(id);
+    if (product.length !== 0) {
+      if (this.findItemInCart(id).length) {
+        this.removeFromCart(id);
+      } else {
+        this._cart.push(product[0]);
+      
+      }
+      this.cartSub.next([...this._cart]);
     }
+  }
   
   removeFromCart(id) {
-  
-      this.http.delete(`http://localhost:3000/api/cart/${id}`, {
-        headers: { "Content-Type": "application/json" }
-      });
-   
+    if (this.findItemInCart(id).length) {
+      const item = this.findItemInCart(id)[0];
+      const index = this._cart.indexOf(item);
+      this._cart.splice(index, 1);
     }
+    this.cartSub.next([...this._cart]);
+  }
    
   
   clearCart() {

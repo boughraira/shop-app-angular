@@ -9,6 +9,8 @@ import { ProductsService } from '../services/products.service';
 })
 export class AppnavComponent implements OnInit {
   cart = [];
+  navbarOpen = false;
+ 
   constructor(private productsService: ProductsService) { }
 
   ngOnInit() {
@@ -16,5 +18,9 @@ export class AppnavComponent implements OnInit {
       this.cart = [...data];
     });
   }
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
+  }
+
 
 }

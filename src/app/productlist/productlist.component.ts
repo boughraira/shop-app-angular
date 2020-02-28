@@ -19,7 +19,7 @@ export class ProductlistComponent implements OnInit {
     });
   }
   addItemToCart(item) {
-    this.productsService.addToCart(item);
+    this.productsService.addToCart(item._id);
   }
   itemInCart(item) {
     return this.productsService.findItemInCart(item._id);

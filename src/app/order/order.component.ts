@@ -32,6 +32,7 @@ export class OrderComponent implements OnInit {
     return items.reduce((acc, cur) => acc + cur.price, 0);
   }
   message(id){
+    console.log("sendit id is : ",id);
    
     this.messageService.sendMessage(id).subscribe(res=>{
       const snackbar = document.getElementById('snackbar');

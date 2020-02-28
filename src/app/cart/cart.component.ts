@@ -14,17 +14,14 @@ export class CartComponent implements OnInit {
   constructor(private productsService: ProductsService ,private httpClient: HttpClient) { }
 
   ngOnInit() {
-    this.httpClient
-      .get<any>("http://localhost:3000/api/cart", {
-        headers: { "Content-Type": "application/json" }
-      }).subscribe(data => {
+    this.productsService.getCart().subscribe(data => {
       this.cart = [...data];
       this.cartTotal = this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
     });
   }
   removeItemFromCart(id) {
-    this.productsService.removeFromCart(id);
-   this.cart.splice(id,1);
+  this.productsService.removeFromCart(id);
+   
     this.cartTotal = this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
     console.log('removed succesfuly');
   }
