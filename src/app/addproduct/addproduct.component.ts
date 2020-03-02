@@ -19,12 +19,14 @@ export class AddproductComponent implements OnInit {
     image: ['', Validators.required],
    
   });
-
+ 
   constructor(private router: Router, private fb: FormBuilder, private productsService: ProductsService) { 
     this.productSub = new BehaviorSubject<any[]>(this.product);
   }
 
   ngOnInit() {
+
+    
   }
   clearForm() {
     this.productSub.next([]);

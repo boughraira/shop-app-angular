@@ -70,7 +70,8 @@ app.post("/api/product", (req, res) => {
     image: req.body.image,
     price: req.body.price,
     description: req.body.description,
-    rate: req.body.rate
+    rate: req.body.rate,
+    stock:req.body.stock
   });
   newProduct.save().then(
     rec => {

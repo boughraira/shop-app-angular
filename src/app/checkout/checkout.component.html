@@ -12,6 +12,18 @@
         </h4>
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let item of cart">
+            <div class="flex-grow-1">
+           
+            
+              <img
+              class="card-img-top"
+              alt="Thumbnail [100%x225]"
+              style=" width: 70px; height: auto; display: block; "
+              [src]="item.image"
+              data-holder-rendered="true"
+          />
+            
+          </div>
             <div>
               <h6 class="my-0">{{item.name}}</h6>
               <small class="text-muted">{{item.description}} </small>

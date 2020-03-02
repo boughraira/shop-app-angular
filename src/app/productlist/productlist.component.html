@@ -1,4 +1,5 @@
 <app-appnav></app-appnav>
+
 <div class="album py-5 bg-light">
   <div class="container">
     <div class="row">
@@ -16,7 +17,7 @@
               data-holder-rendered="true"
           /></a>
           <div class="card-body">
-            <h4 class="card-text">{{ item.name }}</h4>
+            <h4 class="card-title">{{ item.name }}</h4>
             <p class="card-text">
               {{ item.description | truncate: [140, "..."] }}
             </p>
@@ -28,9 +29,11 @@
                 (click)="addItemToCart(item)"
                 [class.btn-outline-primary]="itemInCart(item).length"
               >
+              
                 <i class="fas fa-shopping-cart"></i>
               </button>
             </div>
+           <strong> <p *ngIf="item.stock" style="color: green;"> In Stock</p></strong> 
             <div style="text-align:center">
                 <star-rating
               value="5"

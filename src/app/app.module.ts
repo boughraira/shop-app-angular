@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
 import { APP_ROUTES } from './app.routes';
 import { ProductlistComponent } from './productlist/productlist.component';
@@ -30,6 +29,7 @@ import { RatingModule } from 'ng-starrating';
     OrderComponent,
     AddproductComponent,
     EditproductComponent,
+    
       
   ],
   imports: [
@@ -37,7 +37,8 @@ import { RatingModule } from 'ng-starrating';
     RouterModule.forRoot(APP_ROUTES),
     ReactiveFormsModule,
     HttpClientModule,
-    RatingModule
+    RatingModule,
+  
    
   ],
   providers: [MessageService],

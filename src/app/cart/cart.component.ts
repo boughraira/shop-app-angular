@@ -11,6 +11,7 @@ import { ProductsService } from '../services/products.service';
 export class CartComponent implements OnInit {
   cart = [];
   cartTotal = 0;
+ 
   constructor(private productsService: ProductsService ,private httpClient: HttpClient) { }
 
   ngOnInit() {
@@ -25,6 +26,7 @@ export class CartComponent implements OnInit {
     this.cartTotal = this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
     console.log('removed succesfuly');
   }
+
 
   
 }

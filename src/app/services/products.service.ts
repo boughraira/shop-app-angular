@@ -7,6 +7,7 @@ import { BehaviorSubject } from "rxjs";
   providedIn: "root"
 })
 export class ProductsService {
+ url="http://localhost:3000/api";
   _products = [];
   _cart = [];
   productsSub;
@@ -18,7 +19,7 @@ export class ProductsService {
 
   fetchProducts() {
     this.http
-      .get<any[]>("http://localhost:3000/api/products", {
+      .get<any[]>(`${this.url}/products`, {
         headers: { "Content-Type": "application/json" }
       })
       .subscribe(data => {
@@ -27,13 +28,13 @@ export class ProductsService {
       });
   }
   addProduct(data) {
-    return this.http.post("http://localhost:3000/api/product", data, {
+    return this.http.post(`${this.url}/product`, data, {
       headers: { "Content-Type": "application/json" }
     });
   }
 
   deleteProduct(id) {
-    return this.http.delete(`http://localhost:3000/api/product/${id}`, {
+    return this.http.delete(`${this.url}/product/${id}`, {
       headers: { "Content-Type": "application/json" }
     });
   }
@@ -41,17 +42,17 @@ export class ProductsService {
     return this.productsSub.asObservable();
   }
   editProduct(id) {
-    return this.http.get(`http://localhost:3000/api/product/${id}`, {
+    return this.http.get(`${this.url}/product/${id}`, {
       headers: { "Content-Type": "application/json" }
     });
   }
   updateProduct(id, data) {
-    return this.http.put(`http://localhost:3000/api/product/${id}`, data, {
+    return this.http.put(`${this.url}/product/${id}`, data, {
       headers: { "Content-Type": "application/json" }
     });
   }
   deleteOrder(id) {
-    return this.http.delete(`http://localhost:3000/api/order/${id}`, {
+    return this.http.delete(`${this.url}/order/${id}`, {
       headers: { "Content-Type": "application/json" }
     });
   }
@@ -65,6 +66,7 @@ export class ProductsService {
         this.removeFromCart(id);
       } else {
         this._cart.push(product[0]);
+        localStorage.setItem("product",JSON.stringify(product));
       
       }
       this.cartSub.next([...this._cart]);
@@ -94,7 +96,7 @@ export class ProductsService {
     return item;
   }
   checkout(data) {
-    return this.http.post("http://localhost:3000/api/checkout", data, {
+    return this.http.post(`${this.url}/checkout`, data, {
       headers: { "Content-Type": "application/json" }
     });
   }
