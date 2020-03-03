@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
 const mongoose = require("mongoose");
+const multer = require("multer");
+const fs = require("fs");
 const config = require("./config");
 
 const Product = require("./models/product");
@@ -23,6 +25,17 @@ app.use(function(req, res, next) {
   next();
 });
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "-" + Date.now());
+  }
+});
+const upload = multer({ storage: storage });
+
+
 const sendMail = (order, callback) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -33,8 +46,7 @@ const sendMail = (order, callback) => {
       pass: "ufqlyxjkfyplpajz"
     }
   });
- 
- 
+
   const mailOptions = {
     from: `"hazem boughraira", "boughrairahazem8@gmail.com"`,
     to: `${order.email}`,
@@ -51,28 +63,29 @@ app.post("/api/sendmail/:id", (req, res) => {
 
   Order.findById({ _id: req.params.id }, function(err, order) {
     sendMail(order, (err, info) => {
-      
       if (err) {
         console.log(err);
         res.status(400).json({ error: "Failed to send email" });
       } else {
         console.log("Email has been sent");
         res.status(200).json({ message: info });
-       
       }
     });
   });
 });
 
-app.post("/api/product", (req, res) => {
+app.post("/api/product", upload.single("images"), (req, res) => {
   const newProduct = new Product({
     name: req.body.name,
-    image: req.body.image,
     price: req.body.price,
     description: req.body.description,
     rate: req.body.rate,
-    stock:req.body.stock
+    stock: req.body.stock
   });
+  console.log(req.body);
+  console.log(req.file);
+  newProduct.image.data = fs.readFileSync(req.file.images);
+  newProduct.image.contentType = "jpg" || "png";
   newProduct.save().then(
     rec => {
       res.status(200).json(rec);
@@ -120,7 +133,6 @@ app.delete("/api/product/:id", (req, res) => {
   });
 });
 
-
 app.post("/api/checkout", (req, res) => {
   const newOrder = new Order({
     firstName: req.body.firstName,
@@ -147,14 +159,12 @@ app.get("/api/orders", (req, res) => {
     .populate("items")
     .exec()
     .then(rec => {
-    //  console.log(rec);
-     rec.forEach(x=>{
-       console.log(x);
-     })
+      //  console.log(rec);
+      rec.forEach(x => {
+        console.log(x);
+      });
 
-     res.status(200).json(rec);
-
-    
+      res.status(200).json(rec);
     })
     .catch(err => {
       res.status(500).json(err);

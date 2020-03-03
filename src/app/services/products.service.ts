@@ -28,9 +28,7 @@ export class ProductsService {
       });
   }
   addProduct(data) {
-    return this.http.post(`${this.url}/product`, data, {
-      headers: { "Content-Type": "application/json" }
-    });
+    return this.http.post(`${this.url}/product`, data);
   }
 
   deleteProduct(id) {

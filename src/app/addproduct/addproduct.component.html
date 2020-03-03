@@ -9,6 +9,7 @@
       class="needs-validation"
       [formGroup]="productForm"
       (ngSubmit)="doAdd()"
+      enctype="multipart/form-data"
     >
       <div class="row">
         <div class="col-md-6 mb-3">
@@ -49,9 +50,9 @@
           <div class="invalid-feedback">Price is required</div>
         </div>
         <div class="col-md-6 mb-3">
-          <label>Image URL </label>
+          <label>Image </label>
           <input
-            type="text"
+            type="file"
             class="form-control"
             placeholder=""
             formControlName="image"
