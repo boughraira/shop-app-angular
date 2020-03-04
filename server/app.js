@@ -74,18 +74,17 @@ app.post("/api/sendmail/:id", (req, res) => {
   });
 });
 
-app.post("/api/product", upload.single("images"), (req, res) => {
+app.post("/api/product", (req, res) => {
   const newProduct = new Product({
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
     rate: req.body.rate,
-    stock: req.body.stock
+    stock: req.body.stock,
+    image:req.body.image
   });
-  console.log(req.body);
-  console.log(req.file);
-  newProduct.image.data = fs.readFileSync(req.file.images);
-  newProduct.image.contentType = "jpg" || "png";
+  
+ 
   newProduct.save().then(
     rec => {
       res.status(200).json(rec);

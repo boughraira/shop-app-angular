@@ -43,5 +43,5 @@ export class ProductlistComponent implements OnInit {
       Unchecked Color: ${$event.starRating.uncheckedcolor}`);
      
   }
-
+ 
 }

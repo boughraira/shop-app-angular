@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -17,7 +17,7 @@ export class ProductsService {
     this.cartSub = new BehaviorSubject<any[]>(this._cart);
   }
 
-  fetchProducts() {
+  fetchProducts()  {
     this.http
       .get<any[]>(`${this.url}/products`, {
         headers: { "Content-Type": "application/json" }
@@ -28,7 +28,9 @@ export class ProductsService {
       });
   }
   addProduct(data) {
-    return this.http.post(`${this.url}/product`, data);
+    return this.http.post(`${this.url}/product`, data,{
+      headers: { "Content-Type": "application/json" }
+    });
   }
 
   deleteProduct(id) {
