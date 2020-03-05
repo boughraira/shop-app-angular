@@ -1,10 +1,12 @@
 <app-appnav></app-appnav>
 
 
+
 <div class="album py-5 bg-light">
   <div class="container">
     <div class="row">
       <div class="col-md-4" *ngFor="let item of products">
+      
         <div class="card mb-4 shadow-sm">
           <button class="btn" (click)="delete(item._id)" style="float: right;">
             <i class="far fa-times-circle"></i>

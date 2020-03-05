@@ -74,14 +74,18 @@ app.post("/api/sendmail/:id", (req, res) => {
   });
 });
 
-app.post("/api/product", (req, res) => {
+app.post("/api/product",upload.single('images') ,(req, res) => {
+  console.log(req.body);
   const newProduct = new Product({
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
     rate: req.body.rate,
     stock: req.body.stock,
-    image:req.body.image
+    image:{
+      data:fs.readFileSync(req.file.path),
+      contentType:"jpg" || "png" || "jpeg"
+     }
   });
   
  
@@ -131,6 +135,8 @@ app.delete("/api/product/:id", (req, res) => {
     }
   });
 });
+
+app.get('images', express.static('./public/images'));
 
 app.post("/api/checkout", (req, res) => {
   const newOrder = new Order({
