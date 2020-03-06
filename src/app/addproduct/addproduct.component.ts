@@ -15,13 +15,15 @@ export class AddproductComponent implements OnInit {
   product=[];
   productSub;
   selectedFile:File;
-   uploadData = new FormData();
+   
 
   productForm = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
     price: ['', Validators.required],
-   //image: ['', Validators.required],
+    image:[null,Validators.required]
+   
+   
   });
  
   constructor(private router: Router,private httpClient: HttpClient, private fb: FormBuilder, private productsService: ProductsService) { 
@@ -34,18 +36,23 @@ export class AddproductComponent implements OnInit {
   }
   addProduct(data,image) {
     const uploadData = new FormData();
-    uploadData.append('images', image, image.name);
     uploadData.append('data',data);
-    return this.httpClient.post(`http://localhost:3000/api/product`,uploadData);
+    uploadData.append('image',image);
+    
+   
+    return this.httpClient.post(`http://localhost:3000/api/product`,uploadData,{
+      reportProgress: true,
+      observe: 'events'
+    });
   }
   clearForm() {
     this.productSub.next([]);
   }
   doAdd() {
+   
     
-
     const product = {
-     
+      
       ...this.productForm.value,
       items: this.product,
       
@@ -54,12 +61,14 @@ export class AddproductComponent implements OnInit {
       const snackbar = document.getElementById('snackbar');
       snackbar.innerHTML = 'Product added successfully';
       snackbar.className = 'show';
+    
       setTimeout(() => {
         snackbar.className = snackbar.className.replace('show', '');
         this.clearForm();
         this.router.navigate(['/products']);
       }, 3000);
     });
+    
   }
   onChangeFile(ev){
     this.selectedFile=ev.target.files[0];

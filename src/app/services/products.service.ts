@@ -20,16 +20,14 @@ export class ProductsService {
   fetchProducts()  {
     this.http
       .get<any[]>(`${this.url}/products`, {
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "multipart/form-data" }
       })
       .subscribe(data => {
         this._products = [...data];
         this.productsSub.next([...this._products]);
       });
   }
-  addProduct(data) {
-    return this.http.post(`${this.url}/product`, data);
-  }
+  
 
   deleteProduct(id) {
     return this.http.delete(`${this.url}/product/${id}`, {

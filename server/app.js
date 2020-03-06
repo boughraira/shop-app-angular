@@ -24,10 +24,11 @@ app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
+app.use("./public/images", express.static('image'));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./public/images");
+    cb(null,"./public/images");
   },
   filename: (req, file, cb) => {
     cb(null, file.fieldname + "-" + Date.now());
@@ -74,7 +75,7 @@ app.post("/api/sendmail/:id", (req, res) => {
   });
 });
 
-app.post("/api/product",upload.single('images') ,(req, res) => {
+app.post("/api/product",upload.single('image') ,(req, res) => {
   console.log(req.body);
   const newProduct = new Product({
     name: req.body.name,
@@ -136,7 +137,7 @@ app.delete("/api/product/:id", (req, res) => {
   });
 });
 
-app.get('images', express.static('./public/images'));
+
 
 app.post("/api/checkout", (req, res) => {
   const newOrder = new Order({
