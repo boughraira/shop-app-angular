@@ -37,7 +37,7 @@ export class AddproductComponent implements OnInit {
   addProduct(data,image) {
     const uploadData = new FormData();
     uploadData.append('data',data);
-    uploadData.append('image',image);
+    uploadData.append('image',image,image.name);
     
    
     return this.httpClient.post(`http://localhost:3000/api/product`,uploadData,{

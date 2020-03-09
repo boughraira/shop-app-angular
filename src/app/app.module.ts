@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { APP_ROUTES } from './app.routes';
 import { ProductlistComponent } from './productlist/productlist.component';
@@ -17,6 +17,9 @@ import { AddproductComponent } from './addproduct/addproduct.component';
 import { MessageService } from "./services/message.service";
 import { EditproductComponent } from './editproduct/editproduct.component';
 import { RatingModule } from 'ng-starrating';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { AuthInterceptor } from './services/authconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import { RatingModule } from 'ng-starrating';
     OrderComponent,
     AddproductComponent,
     EditproductComponent,
+    LoginComponent,
+    SignupComponent,
     
       
   ],
@@ -39,11 +44,19 @@ import { RatingModule } from 'ng-starrating';
     ReactiveFormsModule,
     HttpClientModule,
     RatingModule,
+    FormsModule
   
   
    
   ],
-  providers: [MessageService],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  },
+  MessageService
+],
   
   bootstrap: [AppComponent]
 })

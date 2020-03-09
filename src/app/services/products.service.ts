@@ -20,7 +20,7 @@ export class ProductsService {
   fetchProducts()  {
     this.http
       .get<any[]>(`${this.url}/products`, {
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { "Content-Type": "application/json" }
       })
       .subscribe(data => {
         this._products = [...data];
