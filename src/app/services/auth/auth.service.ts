@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from './user';
+import { User } from '../user';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
@@ -19,7 +19,7 @@ export class AuthService {
   ) { }
   signUp(user: User): Observable<any> {
     let api = `${this.endpoint}/register-user`;
-    return this.http.post(api, user,{ headers: this.headers })
+    return this.http.post(api, user,{headers:this.headers})
       .pipe(
         catchError(this.handleError)
       )
@@ -27,7 +27,7 @@ export class AuthService {
 
  
   signIn(user: User) {
-    return this.http.post<any>(`${this.endpoint}/signin`, user,{ headers: this.headers })
+    return this.http.post<any>(`${this.endpoint}/signin`, user,{headers:this.headers})
       .subscribe((res: any) => {
         localStorage.setItem('access_token', res.token);
         this.router.navigate(["products"]);
@@ -47,11 +47,19 @@ export class AuthService {
   doLogout() {
     let removeToken = localStorage.removeItem('access_token');
     if (removeToken == null) {
-      this.router.navigate(['login']);
+      this.router.navigate(['products']);
     }
   }
 
- 
+  getUsers(): Observable<any> {
+    let api = `${this.endpoint}/users`;
+    return this.http.get(api, { headers: this.headers }).pipe(
+      map((res: Response) => {
+        return res || {}
+      }),
+      catchError(this.handleError)
+    )
+  }
   
 
  

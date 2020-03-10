@@ -8,15 +8,14 @@
       <div class="col-md-4" *ngFor="let item of products">
       
         <div class="card mb-4 shadow-sm">
-          <button class="btn" (click)="delete(item._id)" style="float: right;">
+          <button class="btn" (click)="delete(item._id)" style="float: right;" *ngIf="this.authService.isLoggedIn" >
             <i class="far fa-times-circle"></i>
           </button>
           <a [routerLink]="['/editProduct/', item._id]"
             ><img
               class="card-img-top"
-              alt="Thumbnail [100%x225]"
               style=" width: 250; height: 250px; display: block; "
-              [src]="item.image"
+              [src]="imagesURL + item.image"
               data-holder-rendered="true"
           /></a>
           <div class="card-body">

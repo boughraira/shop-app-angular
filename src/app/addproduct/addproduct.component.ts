@@ -20,11 +20,8 @@ export class AddproductComponent implements OnInit {
   productForm = this.fb.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
-    price: ['', Validators.required],
-    image:[null,Validators.required]
-   
-   
-  });
+    price: ['', Validators.required]  
+  })
  
   constructor(private router: Router,private httpClient: HttpClient, private fb: FormBuilder, private productsService: ProductsService) { 
     this.productSub = new BehaviorSubject<any[]>(this.product);
@@ -34,30 +31,33 @@ export class AddproductComponent implements OnInit {
 
     
   }
-  addProduct(data,image) {
+  addProduct(selectedFile: File, data) {
     const uploadData = new FormData();
-    uploadData.append('data',data);
-    uploadData.append('image',image,image.name);
+    const payload = {image: selectedFile, ...data};
+    const keys = Object.keys(payload);
     
+    for (const key of keys) {
+      uploadData.append(key, payload[key]);
+    }    
    
     return this.httpClient.post(`http://localhost:3000/api/product`,uploadData,{
       reportProgress: true,
       observe: 'events'
     });
   }
+
   clearForm() {
     this.productSub.next([]);
   }
-  doAdd() {
-   
-    
+  
+  doAdd() {    
     const product = {
-      
       ...this.productForm.value,
       items: this.product,
-      
     };
-    this.addProduct(product,this.selectedFile).subscribe(res => {
+
+    this.addProduct(this.selectedFile, product).subscribe(res => {
+      console.log(res);
       const snackbar = document.getElementById('snackbar');
       snackbar.innerHTML = 'Product added successfully';
       snackbar.className = 'show';

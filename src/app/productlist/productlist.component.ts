@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { StarRatingComponent } from 'ng-starrating';
+import { AuthService } from '../services/auth/auth.service';
+import {environment} from '../../environments/environment';
+
 
 @Component({
   selector: 'app-productlist',
@@ -9,7 +12,10 @@ import { StarRatingComponent } from 'ng-starrating';
 })
 export class ProductlistComponent implements OnInit {
   products = [];
-  constructor(private productsService: ProductsService) { }
+  imagesURL = environment.imagesLink;
+
+
+  constructor(private productsService: ProductsService, private authService: AuthService) { }
 
   ngOnInit() {
     this.productsService.fetchProducts();

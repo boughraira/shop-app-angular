@@ -1,55 +1,43 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" *ngFor="let user of users">
   <a class="navbar-brand" href="#">Shop </a>
   <button class="navbar-toggler" (click)="toggleNavbar()" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse show" id="navbarSupportedContent" [ngClass]="{ 'show': navbarOpen }">
+  <div class="collapse navbar-collapse show" id="navbarSupportedContent"  [ngClass]="{ 'show': navbarOpen }" >
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/products">Products </a>
+      <li class="nav-item active" >
+        <a class="nav-link" routerLink="/products"  >Products </a>
       </li>
       <li class="nav-item active ">
-        <a class="nav-link" routerLink="/orders">Orders </a>
+        <a class="nav-link" routerLink="/orders"  *ngIf="this.authService.isLoggedIn">Orders </a>
       </li>
       <li class="nav-item active ">
-        <a class="nav-link" routerLink="/addProduct">Add Product </a>
+        <a class="nav-link" routerLink="/addProduct"  *ngIf="this.authService.isLoggedIn">Add Product </a>
       </li>
-      <li class="nav-item active" >
-        <a
-        *ngIf="!this.authService.isLoggedIn"
-        class="nav-link btn-outline-success"
-       
-        routerLinkActive="active"
-        routerLink="/login"
-        >Sign in</a
-      >
-      </li>
-      <li class="nav-item active" >
-        <a
-        *ngIf="!this.authService.isLoggedIn"
-        class="nav-link btn-outline-success"
-        routerLinkActive="active"
-        routerLink="/signup"
-        >Sign up</a
-      >
-      </li>
+     
     
     </ul>
-    <ul style="list-style: none;">
-      <li class="nav-item" style="padding: 0 20px; font-size: 1.4em; ">
+    <ul  style="list-style: none; display: contents;" >
+
+      <li class="nav-item" *ngIf="this.authService.isLoggedIn" >
+       
+          <strong style="margin-right: 20px;" >Welcome {{user.name}}</strong>
+        
+    </li>
+      <li class="nav-item">
          <button
       (click)="logout()"
       *ngIf="this.authService.isLoggedIn"
       type="button"
-      class="btn btn-danger"
+      class="btn btn-danger "
     >
       Logout
     </button>
       </li>
    
 
-      <li class="nav-item" style="padding: 0 20px; font-size: 1.4em; ">
+      <li class="nav-item" style="padding: 0 20px; font-size: 1.4em; " >
         <a class="nav-link p-2"  routerLink="/cart" style="color:#fff">
           <i class="fas fa-shopping-cart"></i> <span class="badge badge-light" style="margin-left: 8px" *ngIf="cart.length">{{cart.length}}</span>
         </a>

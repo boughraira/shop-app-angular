@@ -3,6 +3,8 @@ import { ProductsService } from '../services/products.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {environment} from '../../environments/environment';
+
 
 
 
@@ -14,6 +16,8 @@ import { Router } from '@angular/router';
 export class CheckoutComponent implements OnInit {
   cart = [];
   cartTotal = 0;
+  imagesURL = environment.imagesLink;
+
   checkoutForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -44,7 +48,7 @@ export class CheckoutComponent implements OnInit {
       setTimeout(() => {
         snackbar.className = snackbar.className.replace('show', '');
         this.productsService.clearCart();
-        this.router.navigate(['/orders']);
+        this.router.navigate(['/products']);
       }, 3000);
     });
   }

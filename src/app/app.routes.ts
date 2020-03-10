@@ -8,7 +8,7 @@ import {AddproductComponent} from './addproduct/addproduct.component';
 import { EditproductComponent } from './editproduct/editproduct.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './services/auth/auth.guard';
 
 export const APP_ROUTES: Routes = [
   { path: 'products', component:  ProductlistComponent},
@@ -17,7 +17,7 @@ export const APP_ROUTES: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   {path:'addProduct',component:AddproductComponent,canActivate: [AuthGuard]},
   {path:'editProduct/:id',component:EditproductComponent,canActivate: [AuthGuard]},
-  {path:'signup',component:SignupComponent},
+  {path:'signup',component:SignupComponent },
   {path:'login',component:LoginComponent},
   { path: '', redirectTo: 'products', pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../services/products.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 
 
 @Component({
@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class AppnavComponent implements OnInit {
   cart = [];
+  users=[];
   navbarOpen = false;
  
   constructor(private productsService: ProductsService , private authService: AuthService) { }
@@ -17,6 +18,9 @@ export class AppnavComponent implements OnInit {
   ngOnInit() {
     this.productsService.getCart().subscribe(data => {
       this.cart = [...data];
+    });
+    this.authService.getUsers().subscribe(data => {
+      this.users = [...data];
     });
   }
   toggleNavbar() {

@@ -19,7 +19,7 @@ import { EditproductComponent } from './editproduct/editproduct.component';
 import { RatingModule } from 'ng-starrating';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { AuthInterceptor } from './services/authconfig.interceptor';
+import { AuthInterceptor } from './services/auth/authconfig.interceptor';
 
 @NgModule({
   declarations: [

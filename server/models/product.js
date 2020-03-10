@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const ProductSchema = new Schema({
   name: String,
-  image: {data:Buffer,contentType:String},
+  image: String,
   price: Number,
   description: String,
   rate: {type: Number, default:5},

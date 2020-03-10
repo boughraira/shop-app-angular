@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,10 +27,10 @@ export class SignupComponent implements OnInit {
   }
   registerUser() {
     this.authService.signUp(this.signupForm.value).subscribe((res) => {
-      if (res.result) {
+     
         this.signupForm.reset()
         this.router.navigate(['login']);
-      }
+      
     })
   }
 

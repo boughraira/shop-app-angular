@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import { ProductsService } from '../services/products.service';
+import {environment} from '../../environments/environment';
+
 
 @Component({
   selector: 'app-cart',
@@ -11,6 +13,8 @@ import { ProductsService } from '../services/products.service';
 export class CartComponent implements OnInit {
   cart = [];
   cartTotal = 0;
+  imagesURL = environment.imagesLink;
+
  
   constructor(private productsService: ProductsService ,private httpClient: HttpClient) { }
 

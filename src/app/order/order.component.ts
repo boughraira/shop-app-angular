@@ -3,6 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import {MessageService} from "../services/message.service";
 import {ProductsService} from '../services/products.service';
 import { Router } from '@angular/router';
+import {environment} from '../../environments/environment';
+
 
 
 @Component({
@@ -12,7 +14,8 @@ import { Router } from '@angular/router';
 })
 export class OrderComponent implements OnInit {
   orders = [];
-  
+  imagesURL = environment.imagesLink;
+
   constructor(private httpClient: HttpClient,private router: Router, private messageService:MessageService,private productsService:ProductsService ) {}
 
   ngOnInit() {

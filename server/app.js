@@ -24,18 +24,20 @@ app.use(express.static(path.join(__dirname, "../dist")));
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization, Accept, X-Request-With");
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
-app.use("./public/images", express.static('image'));
+app.use("/assets", express.static('./public/images'));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+   
     cb(null,"./public/images");
   },
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
+    console.log(file);
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
   }
 });
 const upload = multer({ storage: storage });
@@ -89,10 +91,10 @@ app.post("/api/register-user",
         check('email', 'Email is required')
             .not()
             .isEmpty(),
-        check('password', 'Password should be between 5 to 8 characters long')
+        check('password', 'Password should be longer than 8 characters')
             .not()
             .isEmpty()
-            .isLength({ min: 5, max: 8 })
+            .isLength({ min: 5 })
     ],
     (req, res, next) => {
         const errors = validationResult(req);
@@ -158,19 +160,25 @@ app.post("/api/register-user",
       });
   });
 
+  app.get('/api/users',(req,res)=>{
+    User.find((error, response) => {
+      if (error) {
+          return next(error);
+      } else {
+          res.status(200).json(response);
+      }
+  })
+  });
 
-app.post("/api/product",upload.single('image') ,(req, res) => {
-  console.log(req.body);
+app.post("/api/product", upload.single('image'), (req, res) => {
+ 
   const newProduct = new Product({
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
     rate: req.body.rate,
     stock: req.body.stock,
-    image:{
-      data:fs.readFileSync(req.file.path),
-      contentType:"jpg" || "png" || "jpeg"
-     }
+    image: path.parse(req.file.path).name + path.parse(req.file.path).ext
   });
   
  
