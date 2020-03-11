@@ -35,7 +35,7 @@
                 <i class="fas fa-shopping-cart"></i>
               </button>
             </div>
-           <strong> <p *ngIf="item.stock" style="color: green;"> In Stock</p></strong> 
+           <strong> <p *ngIf="item.stock" style="color: green; text-align:center"> In Stock</p></strong> 
             <div style="text-align:center">
                 <star-rating
               value="5"
@@ -47,6 +47,9 @@
               (rate)="onRate($event)"
             ></star-rating>
             </div>
+            <div class="col-sm-9 ">
+            
+          </div>
         
           </div>
         </div>

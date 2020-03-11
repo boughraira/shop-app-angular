@@ -178,6 +178,7 @@ app.post("/api/product", upload.single('image'), (req, res) => {
     description: req.body.description,
     rate: req.body.rate,
     stock: req.body.stock,
+    quantity:req.body.quantity,
     image: path.parse(req.file.path).name + path.parse(req.file.path).ext
   });
   

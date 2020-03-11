@@ -14,6 +14,8 @@ export class CartComponent implements OnInit {
   cart = [];
   cartTotal = 0;
   imagesURL = environment.imagesLink;
+ 
+ quantity=1;
 
  
   constructor(private productsService: ProductsService ,private httpClient: HttpClient) { }
@@ -30,7 +32,19 @@ export class CartComponent implements OnInit {
     this.cartTotal = this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
     console.log('removed succesfuly');
   }
+increment(){
+  
+  this.quantity+=1;
+this.cartTotal +=this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
 
+}
+decrement(){
+  if(this.quantity>1){
+    this.quantity-=1;
+    this.cartTotal -=this.cart.reduce((acc, cur) => acc + Number(cur.price), 0);
+
+  }
+}
 
   
 }

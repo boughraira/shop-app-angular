@@ -9,7 +9,8 @@ const ProductSchema = new Schema({
   price: Number,
   description: String,
   rate: {type: Number, default:5},
-  stock:{type:Boolean,default:true}
+  stock:{type:Boolean,default:true},
+  quantity:{type:Number,default:1}
   
 });
 

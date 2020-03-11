@@ -6,39 +6,67 @@
     <div class="col-md-4 order-md-2 mb-4">
       <h4 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-muted">Your cart</span>
-        <span class="badge badge-secondary badge-pill">{{cart.length}}</span>
+        <span class="badge badge-secondary badge-pill">{{ cart.length }}</span>
       </h4>
       <ul class="list-group mb-3">
         <li class="list-group-item d-flex justify-content-between">
-          <span>Total (USD)</span> <strong>{{cartTotal | currency}}</strong>
+          <span>Total (USD)</span> <strong>{{ cartTotal | currency }}</strong>
         </li>
       </ul>
-      <button class="btn btn-primary btn-block"routerLink="/checkout">Checkout</button>
+      <button class="btn btn-primary btn-block" routerLink="/checkout">
+        Checkout
+      </button>
     </div>
     <div class="col-md-8 order-md-1">
       <ul class="list-group mb-3">
-        <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let item of cart">
+        <li
+          class="list-group-item d-flex justify-content-between lh-condensed"
+          *ngFor="let item of cart"
+        >
           <div class="flex-grow-1">
-           
-            
-              <img
+            <img
               class="card-img-top"
               alt="Thumbnail [100%x225]"
               style=" width: 250px; height: auto; display: block; "
               [src]="imagesURL + item.image"
               data-holder-rendered="true"
-          />
-            
+            />
           </div>
           <div class="flex-grow-1">
-            <h6 class="my-0">{{item.name}}</h6>
-            <small class="text-muted">{{item.description}}</small>
+            <h6 class="my-0">{{ item.name }}</h6>
+            <small class="text-muted">{{ item.description }}</small>
           </div>
           <div class="flex-grow-1">
-            <h4 class="my-0">{{item.price | currency}}</h4>
+            <h4 class="my-0">{{ item.price | currency }}</h4>
           </div>
+          <div class="flex-grow-1" >
+          
+              <div class="row">
+                <a
+                  class="btn btn-primary text-white"
+                  (click)="decrement()"
+                  role="button"
+                >
+                  <i class="fa fa-minus" style="font-size:15px"></i>
+                </a>
+                <div class="col-sm-3">
+                  {{quantity }}
+                </div>
+                <a
+                  class="btn btn-primary text-white"
+                  (click)="increment()"
+                  role="button"
+                >
+                  <i class="fa fa-plus" style="font-size:15px"></i>
+                </a>
+              </div>
+           
+          </div>
+
           <div class="d-flex align-items-center">
-            <button class="btn" (click)="removeItemFromCart(item._id)"  ><i class="far fa-times-circle"></i></button>
+            <button class="btn" (click)="removeItemFromCart(item._id)">
+              <i class="far fa-times-circle"></i>
+            </button>
           </div>
         </li>
       </ul>
@@ -47,5 +75,4 @@
   <ng-template #noItemsInCart>
     <h2 class="text-center">Your Cart is empty</h2>
   </ng-template>
-  
 </div>
