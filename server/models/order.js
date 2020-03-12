@@ -12,6 +12,7 @@ const OrderSchema = new Schema({
   country: String,
   state: String,
   zip: String,
+  number:Number,
   items: [{type: Schema.Types.ObjectId, ref: 'Product'}],
   date: {type: Date, default: Date.now()}
 });

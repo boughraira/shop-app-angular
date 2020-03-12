@@ -27,6 +27,7 @@ export class CheckoutComponent implements OnInit {
     country: ['', Validators.required],
     state: ['', Validators.required],
     zip: ['', Validators.required],
+    number: ['', Validators.required],
   });
   constructor(private router: Router, private fb: FormBuilder, private productsService: ProductsService) { }
 

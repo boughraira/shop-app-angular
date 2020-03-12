@@ -15,6 +15,9 @@ const Order = require("./models/order");
 const User=require("./models/user");
 const nodemailer = require("nodemailer");
 
+const twilio = require('twilio');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoURL, { useNewUrlParser: true });
 
@@ -242,6 +245,7 @@ app.post("/api/checkout", (req, res) => {
     country: req.body.country,
     state: req.body.state,
     zip: req.body.zip,
+    number:req.body.number,
     items: req.body.items.map(item => item._id) || []
   });
   newOrder.save().then(

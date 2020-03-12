@@ -70,7 +70,17 @@
             <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" formControlName="addressTwo">
           </div>
 
-          <div class="row">
+          <div class="row"> 
+            <div class="col-md-5 mb-3">
+              <label for="number">Phone</label>
+              <input type="number" class="form-control" id="number" placeholder="" required="" formControlName="number">
+              <div class="invalid-feedback">Zip code required.</div>
+            </div>
+            <div class="col-md-5 mb-3">
+              <label for="zip">Zip</label>
+              <input type="text" class="form-control" id="zip" placeholder="" required="" formControlName="zip">
+              <div class="invalid-feedback">Phone Number required.</div>
+            </div>
             <div class="col-md-5 mb-3">
               <label for="country">Country</label>
               <select class="custom-select d-block w-100" id="country" required="" formControlName="country">
@@ -87,11 +97,7 @@
               </select>
               <div class="invalid-feedback">Please provide a valid state.</div>
             </div>
-            <div class="col-md-3 mb-3">
-              <label for="zip">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="" required="" formControlName="zip">
-              <div class="invalid-feedback">Zip code required.</div>
-            </div>
+           
           </div>
 
           <hr class="mb-4">
