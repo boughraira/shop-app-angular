@@ -40,7 +40,7 @@
     "ng-starrating": "^1.0.20",
     "nodemailer": "^6.4.2",
     "nodemon": "^2.0.2",
-    "rxjs": "~6.2.0",
+    "rxjs": "~6.5.5",
     "twilio": "^3.40.0",
     "zone.js": "^0.8.29"
   },
